@@ -1,0 +1,20 @@
+version: '3'
+
+networks:
+  app-tier:
+    driver: bridge
+
+services:
+  activemq:
+    image: fushixin/activemq:5.16.6
+    restart: always
+    networks:
+      - app-tier
+    ports:
+      - '1099:1099'
+      - '1883:1883'
+      - '8161:8161'
+      - '61616:61616'
+      - '5672:5672'
+      - '61613:61613'
+      - '61614:61614'
