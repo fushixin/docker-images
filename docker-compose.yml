@@ -24,6 +24,9 @@ services:
     image: 'redis:7.0.10-alpine'
     container_name: redis
     restart: always
+    volumes:
+      - d:/db/redis/data:/data
+      - d:/db/redis/conf/redis.conf:/etc/redis/redis.conf
     ports:
       - '6379:6379'
   activemq:
