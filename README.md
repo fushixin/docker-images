@@ -17,16 +17,12 @@ services:
       --default-authentication-plugin=mysql_native_password
       --character-set-server=utf8mb4
       --collation-server=utf8mb4_general_ci
-      --lower_case_table_names=1                        # 忽略大小写
+      --lower_case_table_names=1   
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root                         # root用户登录密码
-      MYSQL_USER: root                                  # 登录用户
-      MYSQL_PASS: root                                  # 登录密码
-      TZ: Asia/Shanghai                                 # 时区
+      MYSQL_ROOT_PASSWORD: root                 
     volumes:
-      - d:/db/mysql/data:/var/lib/mysql                 # 挂载数据
-      - d:/db/mysql/conf/my.cnf:/etc/mysql/my.cnf       # 挂载配置文件
+      - /docker/data/mysql/data:/var/lib/mysql       
     ports:
       - '3306:3306'
 ```
@@ -49,6 +45,8 @@ services:
     image: 'redis:7.0.10-alpine'
     container_name: redis
     restart: always
+    volumes:
+      - '/docker/data/redis/data:/data'
     ports:
       - '6379:6379'
 ```
@@ -71,6 +69,8 @@ services:
     image: 'fushixin/activemq:5.16.6'
     container_name: activemq
     restart: always
+    volumes:
+      - '/docker/data/activemq/data:/usr/local/docker/activemq/data'
     ports:
       - '1099:1099'
       - '1883:1883'
@@ -94,10 +94,19 @@ services:
   image: 'bitnami/zookeeper:latest'
     container_name: zookeeper
     restart: always
+    volumes:
+      - '/docker/data/zookeeper:/bitnami/zookeeper'
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
     ports:
       - '2181:2181'
+```
+
+<span style='color:red'>NOTE: As this is a non-root container, the mounted files and directories must have the proper
+permissions for the UID 1001.</span>
+
+```
+chown -R 1001:1001 /docker/data/zookeeper
 ```
 
 ### run
@@ -118,6 +127,8 @@ services:
     image: 'bitnami/kafka:latest'
     container_name: kafka
     restart: always
+    volumes:
+      - '/docker/data/kafka:/bitnami/kafka'
     environment:
       - KAFKA_BROKER_ID=1
       - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
@@ -128,6 +139,13 @@ services:
       - '9092:9092'
     depends_on:
       - zookeeper
+```
+
+<span style='color:red'>NOTE: As this is a non-root container, the mounted files and directories must have the proper
+permissions for the UID 1001.</span>
+
+```
+chown -R 1001:1001 /docker/data/kafka
 ```
 
 ### run

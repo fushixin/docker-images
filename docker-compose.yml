@@ -9,50 +9,46 @@ services:
       --character-set-server=utf8mb4
       --collation-server=utf8mb4_general_ci
       --lower_case_table_names=1
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: root
-      MYSQL_PASS: root
-      TZ: Asia/Shanghai
     volumes:
-      - d:/db/mysql/data:/var/lib/mysql
+      - '/docker/data/mysql/data:/var/lib/mysql'
     ports:
       - '3306:3306'
+    restart: always
   redis:
     image: 'redis:7.0.10-alpine'
     container_name: redis
-    restart: always
     volumes:
-      - d:/db/redis/data:/data
+      - '/docker/data/redis/data:/data'
     ports:
       - '6379:6379'
+    restart: always
   activemq:
     image: 'fushixin/activemq:5.16.6'
     container_name: activemq
-    restart: always
     volumes:
-      - d:/db/activemq/data:/usr/local/docker/activemq/data
+      - '/docker/data/activemq/data:/usr/local/docker/activemq/data'
     ports:
       - '1099:1099'
       - '1883:1883'
       - '8161:8161'
+    restart: always
   zookeeper:
     image: 'bitnami/zookeeper:latest'
     container_name: zookeeper
-    restart: always
     volumes:
-      - d:/db/zookeeper/data:/bitnami/zookeeper/data
+      - '/docker/data/zookeeper:/bitnami/zookeeper'
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
     ports:
       - '2181:2181'
+    restart: always
   kafka:
     image: 'bitnami/kafka:latest'
     container_name: kafka
-    restart: always
     volumes:
-      - d:/db/kafka/data:/bitnami/kafka/data
+      - '/docker/data/kafka:/bitnami/kafka'
     environment:
       - KAFKA_BROKER_ID=1
       - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
@@ -63,3 +59,4 @@ services:
       - '9092:9092'
     depends_on:
       - zookeeper
+    restart: always
