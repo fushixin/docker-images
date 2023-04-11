@@ -17,7 +17,6 @@ services:
       TZ: Asia/Shanghai
     volumes:
       - d:/db/mysql/data:/var/lib/mysql
-      - d:/db/mysql/conf/my.cnf:/etc/mysql/my.cnf
     ports:
       - '3306:3306'
   redis:
@@ -26,13 +25,14 @@ services:
     restart: always
     volumes:
       - d:/db/redis/data:/data
-      - d:/db/redis/conf/redis.conf:/etc/redis/redis.conf
     ports:
       - '6379:6379'
   activemq:
     image: 'fushixin/activemq:5.16.6'
     container_name: activemq
     restart: always
+    volumes:
+      - d:/db/activemq/data:/usr/local/docker/activemq/data
     ports:
       - '1099:1099'
       - '1883:1883'
@@ -41,6 +41,8 @@ services:
     image: 'bitnami/zookeeper:latest'
     container_name: zookeeper
     restart: always
+    volumes:
+      - d:/db/zookeeper/data:/bitnami/zookeeper/data
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
     ports:
@@ -49,6 +51,8 @@ services:
     image: 'bitnami/kafka:latest'
     container_name: kafka
     restart: always
+    volumes:
+      - d:/db/kafka/data:/bitnami/kafka/data
     environment:
       - KAFKA_BROKER_ID=1
       - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
