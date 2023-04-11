@@ -2,11 +2,21 @@ version: '3.9'
 
 services:
   mysql:
-    image: mysql:8.0.32
+    image: 'mysql:8.0.32'
     container_name: mysql
-    command: --default-authentication-plugin=mysql_native_password
+    command:
+      --default-authentication-plugin=mysql_native_password
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_general_ci
+      --lower_case_table_names=1                        # 忽略大小写
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root                         # root用户登录密码
+      MYSQL_USER: root                                  # 登录用户
+      MYSQL_PASS: root                                  # 登录密码
+      TZ: Asia/Shanghai                                 # 时区
+    volumes:
+      - d:/db/mysql/data:/var/lib/mysql                 # 挂载数据
+      - d:/db/mysql/conf/my.cnf:/etc/mysql/my.cnf       # 挂载配置文件
     ports:
       - '3306:3306'
