@@ -22,7 +22,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root                 
     volumes:
-      - /docker/data/mysql/data:/var/lib/mysql       
+      - /data/mysql/data:/var/lib/mysql       
     ports:
       - '3306:3306'
 ```
@@ -46,7 +46,7 @@ services:
     container_name: redis
     restart: always
     volumes:
-      - '/docker/data/redis/data:/data'
+      - '/data/redis/data:/data'
     ports:
       - '6379:6379'
 ```
@@ -70,7 +70,7 @@ services:
     container_name: activemq
     restart: always
     volumes:
-      - '/docker/data/activemq/data:/usr/local/docker/activemq/data'
+      - '/data/activemq/data:/usr/local/activemq/data'
     ports:
       - '1099:1099'
       - '1883:1883'
@@ -95,7 +95,7 @@ services:
     container_name: zookeeper
     restart: always
     volumes:
-      - '/docker/data/zookeeper:/bitnami/zookeeper'
+      - '/data/zookeeper:/bitnami/zookeeper'
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
     ports:
@@ -106,7 +106,7 @@ services:
 permissions for the UID 1001.</span>
 
 ```
-chown -R 1001:1001 /docker/data/zookeeper
+chown -R 1001:1001 /data/zookeeper
 ```
 
 ### run
@@ -128,7 +128,7 @@ services:
     container_name: kafka
     restart: always
     volumes:
-      - '/docker/data/kafka:/bitnami/kafka'
+      - '/data/kafka:/bitnami/kafka'
     environment:
       - KAFKA_BROKER_ID=1
       - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
@@ -145,7 +145,7 @@ services:
 permissions for the UID 1001.</span>
 
 ```
-chown -R 1001:1001 /docker/data/kafka
+chown -R 1001:1001 /data/kafka
 ```
 
 ### run

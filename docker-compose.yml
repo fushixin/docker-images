@@ -12,7 +12,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
     volumes:
-      - '/docker/data/mysql/data:/var/lib/mysql'
+      - '/data/mysql/data:/var/lib/mysql'
     ports:
       - '3306:3306'
     restart: always
@@ -20,7 +20,7 @@ services:
     image: 'redis:7.0.10-alpine'
     container_name: redis
     volumes:
-      - '/docker/data/redis/data:/data'
+      - '/data/redis/data:/data'
     ports:
       - '6379:6379'
     restart: always
@@ -28,7 +28,7 @@ services:
     image: 'fushixin/activemq:5.16.6'
     container_name: activemq
     volumes:
-      - '/docker/data/activemq/data:/usr/local/docker/activemq/data'
+      - '/data/activemq/data:/usr/local/activemq/data'
     ports:
       - '1099:1099'
       - '1883:1883'
@@ -38,7 +38,7 @@ services:
     image: 'bitnami/zookeeper:latest'
     container_name: zookeeper
     volumes:
-      - '/docker/data/zookeeper:/bitnami/zookeeper'
+      - '/data/zookeeper:/bitnami/zookeeper'
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
     ports:
@@ -48,7 +48,7 @@ services:
     image: 'bitnami/kafka:latest'
     container_name: kafka
     volumes:
-      - '/docker/data/kafka:/bitnami/kafka'
+      - '/data/kafka:/bitnami/kafka'
     environment:
       - KAFKA_BROKER_ID=1
       - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
