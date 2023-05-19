@@ -1,0 +1,12 @@
+FROM alpine:latest
+
+MAINTAINER fushixin.vip@gmail.com
+
+RUN apk update && \
+    apk upgrade && \
+    apk add build-base git nasm meson yasm lame-dev opus-dev x264-dev x265-dev libogg-dev libvorbis-dev libvpx-dev xvidcore-dev freetype-dev libass-dev && \
+    git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg && \
+    cd ffmpeg && \
+    ./configure && make && make install
+
+WORKDIR /data
