@@ -13,4 +13,3 @@ RUN mkdir data
 WORKDIR /data
 
 CMD ["/bin/sh","-c", "while true; do sleep 3600; done"]
-cd
