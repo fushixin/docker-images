@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  zookeeper:
+    image: zookeeper:latest
+    container_name: zookeeper
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - ./data:/data
+    restart: always
+    ports:
+      - '2181:2181'
